@@ -19,4 +19,8 @@ public interface Map<Key extends Comparable<Key>, Value> {
     Key maxKey();
 
     Value get(Key key);
+
+    void print();
+
+    Key findValue(Value value);
 }

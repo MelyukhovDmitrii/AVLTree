@@ -262,6 +262,16 @@ public class MyTree<Key extends Comparable<Key>, Value> implements Map<Key, Valu
         return get(root, key);
     }
 
+    @Override
+    public void print() {
+
+    }
+
+    @Override
+    public Key findValue(Value value) {
+        return null;
+    }
+
     public void inOrder(Node node, List<Key> list){
         if (node == null) return;
         inOrder(node.left, list);
