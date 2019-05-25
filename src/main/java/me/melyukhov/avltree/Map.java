@@ -1,4 +1,4 @@
-package avl;
+package me.melyukhov.avltree;
 
 import java.util.List;
 
