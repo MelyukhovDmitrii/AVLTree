@@ -22,5 +22,7 @@ public interface Map<Key extends Comparable<Key>, Value> {
 
     void print();
 
-    Key findValue(Value value);
+    Comparable<Key> findValue(Value value);
+
+    List<MyTree.Node> nodeList();
 }
