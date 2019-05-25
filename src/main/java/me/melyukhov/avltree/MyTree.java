@@ -2,14 +2,15 @@ package me.melyukhov.avltree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MyTree<Key extends Comparable<Key>, Value> implements Map<Key, Value>{
 
     public class Node {
         private int h;
         private int balance;
-        Key key;
-        Value value;
+        public Key key;
+        public Value value;
         private Node left, right, father;
         public Node (Key key, Value value, Node father) {
             this.key = key;
@@ -262,31 +263,59 @@ public class MyTree<Key extends Comparable<Key>, Value> implements Map<Key, Valu
         return get(root, key);
     }
 
-    @Override
-    public void print() {
-
+    private void print(Node node, int level) {
+        if (node != null) {
+            print(node.right,level+1);
+            for (int i=0;i<level;i++) {
+                System.out.print("\t");
+            }
+            System.out.println(node.key + "->" + node.value+" h="+node.h+" balance="+node.balance);
+            print(node.left,level+1);
+        }
     }
 
     @Override
-    public Key findValue(Value value) {
+    public void print() {
+        print(root,0);
+    }
+
+    @Override
+    public Comparable<Key> findValue(Value value) {
+        List<MyTree.Node> list = nodeList();
+        for(MyTree.Node node: list){
+            if(node.value == value){
+                return node.key;
+            }
+        }
         return null;
     }
 
-    public void inOrder(Node node, List<Key> list){
+    @Override
+    public List<MyTree.Node> nodeList() {
+        List<MyTree.Node> nodes = new ArrayList<>();
+        order(root, nodes);
+        return nodes;
+    }
+
+    private void order(Node node, List<MyTree.Node> list){
+        if (node == null) return;
+        order(node.left, list);
+        list.add(node);
+        order(node.right, list);
+    }
+
+    private void inOrder(Node node, List<Node> list){
         if (node == null) return;
         inOrder(node.left, list);
-        list.add(node.key);
+        list.add(node);
         inOrder(node.right, list);
     }
 
     @Override
     public List<Key> keySet(){
-        List<Key> list = new ArrayList<>();
-
+        List<Node> list = new ArrayList<>();
         inOrder(root, list);
-        /*for(Node e = getFirstNode(); e != null; e = e.next()){
-            set.add(e.key);
-        }*/
-        return list;
+        List<Key> keys = list.stream().map(i -> i.key).collect(Collectors.toList());
+        return keys;
     }
 }
