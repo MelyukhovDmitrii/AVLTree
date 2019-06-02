@@ -43,7 +43,7 @@ public class TestWhiteBox {
                 testTree.keySet().toArray(),
                 "Тест на заполнение большими значениями провалился");
     }
-    @Test
+    //@Test
     public void testFillAndDeleteRandom() {
         Random r = new Random();
         ArrayList<Integer> randomValues = new ArrayList<>();
